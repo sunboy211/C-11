@@ -4,10 +4,10 @@
 #include<cstdint> //c standard int  uint64_t
 #include<vector>
 
-//std::launch::async
-//std::launch::deferred
+//std::launch::async 派生一个线程 立即完成
+//std::launch::deferred 延迟运算 直到遇到主调线程的future第一次get()函数访问
 
-uint64_t fibo(uint64_t n){
+uint64_t fibo(uint64_t n){ //Fibonacci数列
   uint64_t a_0=0;
   uint64_t a_1=1;
   for(uint64_t index: n){
@@ -15,7 +15,18 @@ uint64_t fibo(uint64_t n){
     a_0=a_1;
     a_1+=tmp;
   }
+  return a_0;
 }
 
-
+int main(int argc, char *argv[]){
+  const uint64_t num_threads=32;
+  std::vector<std::future<uint64_t>> results;
+  // for each thread
+  for(uint64_t id: num_threads){
+    results.emplace_back(std::async(std::launch::async,fibo,id));
+  }
+  for(auto& result: results){
+    std::cout<<result.get()<<std::endl;
+  }
+}
 
