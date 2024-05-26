@@ -1,6 +1,46 @@
 //条件变量
 #include<iostream>
 #include<thread>
-#include<mutex>
-#include<chrono>
-#include<condition_variable>
+#include<mutex> //std::mutex 互斥锁
+#include<chrono> //std::this_thread::sleep_for
+#include<condition_variable> //std::condition_variable
+
+using namespace std;
+int main(){
+  std::mutex mutex;
+  condition_variable cv;
+  bool is_ping=true;
+
+  auto ping=[]()->void{
+    while(true){
+      //wait to be signaled
+      unique_lock<std::mutex> unique_lock(mutex);
+      cv.wait(unique_lock,[&](){return is_ping;});
+      //print "ping" to the command line
+      this_thread::sleep_for(ls);
+      cout<<"ping"<<endl;
+      //alter state and notify other threads
+      is_ping=!is_ping;
+      cv.notify_one();
+    }
+  };
+
+auto pong=[]()->void{
+    while(true){
+      //wait to be signaled
+      unique_lock<std::mutex> unique_lock(mutex);
+      cv.wait(unique_lock,[&](){return !is_ping;});
+      //print "pong" to the command line
+      this_thread::sleep_for(ls);
+      cout<<"pong"<<endl;
+      //alter state and notify other threads
+      is_ping=!is_ping;
+      cv.notify_one();
+    }
+  };
+
+std::thread ping_thread(ping);
+std::thread pong_thread(pong);
+ping_thread.join();
+pong_thread.join();
+}
