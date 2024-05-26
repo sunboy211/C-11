@@ -1,15 +1,35 @@
 //补充值传递、引用传递
+
+//值传
 void func1(long *v,long b){
   b=*v;
 }
 
 void test1(){
   long a=1;
-  auto lmd1=[a](long b) {b=a;}
+  auto lmd1=[a](long b) {b=a;} //lambda
+  lmd1(2);
 }
 
 void call_func1(){
   long a=1;
   long v=a;
-  
+  func1(&v,2);
+}
+
+//引用传递
+void func2(long *v,long b){
+  b=**v;
+}
+
+void test2(){
+  long a=1;
+  auto lmd2=[&a](long b) {b=a;} //lambda
+  lmd2(2);
+}
+
+void call_func2(){
+  long a=1;
+  long *v=&a;
+  func2(&v,2);
 }
