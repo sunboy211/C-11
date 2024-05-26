@@ -18,7 +18,7 @@ void call_func1(){
 }
 
 //引用传递
-void func2(long *v,long b){
+void func2(long **v,long b){
   b=**v;
 }
 
