@@ -1,0 +1,12 @@
+//C++多线程编程--异步方式
+#include<iostream>
+#include<future> //std::async
+#include<cstdint> //c standard int  uint64_t
+#include<vector>
+
+
+
+
+
+
+
