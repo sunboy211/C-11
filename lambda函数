@@ -30,6 +30,6 @@ void test2(){
 
 void call_func2(){
   long a=1;
-  long *v=&a;
+  long *v=&a; //指针v指向a的地址
   func2(&v,2);
 }
