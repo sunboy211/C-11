@@ -1,0 +1,15 @@
+//补充值传递、引用传递
+void func1(long *v,long b){
+  b=*v;
+}
+
+void test1(){
+  long a=1;
+  auto lmd1=[a](long b) {b=a;}
+}
+
+void call_func1(){
+  long a=1;
+  long v=a;
+  
+}
