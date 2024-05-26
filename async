@@ -4,9 +4,18 @@
 #include<cstdint> //c standard int  uint64_t
 #include<vector>
 
+//std::launch::async
+//std::launch::deferred
 
-
-
+uint64_t fibo(uint64_t n){
+  uint64_t a_0=0;
+  uint64_t a_1=1;
+  for(uint64_t index: n){
+    const uint64_t tmp=a_0;
+    a_0=a_1;
+    a_1+=tmp;
+  }
+}
 
 
 
