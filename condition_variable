@@ -17,7 +17,7 @@ int main(){
       unique_lock<std::mutex> unique_lock(mutex);
       cv.wait(unique_lock,[&](){return is_ping;});  //阻塞当前线程，直到条件变量被唤醒
       //print "ping" to the command line
-      this_thread::sleep_for(ls);   //C11的休眠函数
+      this_thread::sleep_for(1s);   //C11的休眠函数
       cout<<"ping"<<endl;
       //alter state and notify other threads
       is_ping=!is_ping;
@@ -31,7 +31,7 @@ auto pong=[]()->void{
       unique_lock<std::mutex> unique_lock(mutex);
       cv.wait(unique_lock,[&](){return !is_ping;});
       //print "pong" to the command line
-      this_thread::sleep_for(ls);
+      this_thread::sleep_for(1s);
       cout<<"pong"<<endl;
       //alter state and notify other threads
       is_ping=!is_ping;
